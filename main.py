@@ -113,12 +113,16 @@ class Game:
         mid = self.plays.thirteenToTwentyfour(self.tokenHistory)
         hig = self.plays.twentyfiveToThirtysix(self.tokenHistory)
 
-        if round(low/len(self.tokenHistory),2) > 33.33:
-            print('1-12','%{:.2f}'.format(((low/len(self.tokenHistory))*100)), "%33.33")
-        if round(mid/len(self.tokenHistory),2) > 33.33:
-            print('13-24','%{:.2f}'.format(((mid/len(self.tokenHistory))*100)), "%33.33")
-        if round(hig/len(self.tokenHistory),2) > 33.33:
-            print('25-36','%{:.2f}'.format(((hig/len(self.tokenHistory))*100)), "%33.33")
+        if low > mid:
+            if low > hig:
+                print('1-12','%{:.2f}'.format(((low/len(self.tokenHistory))*100)), "%33.33")
+            else:
+                print('25-36','%{:.2f}'.format(((hig/len(self.tokenHistory))*100)), "%33.33")
+        else:
+            if mid > hig:
+                print('13-24','%{:.2f}'.format(((mid/len(self.tokenHistory))*100)), "%33.33")
+            else:
+                print('25-36','%{:.2f}'.format(((hig/len(self.tokenHistory))*100)), "%33.33")
 
     def start(self):
         while True:
@@ -130,6 +134,9 @@ class Game:
                     return
                 try:
                    x = int(x)
+                   if x < 0 or x > 36:
+                       print("Number out of range")
+                       errOcurred = True
                 except ValueError:
                     errOcurred = True
                     print("That's not an number!")
